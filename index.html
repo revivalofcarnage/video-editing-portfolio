@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ujjwal Kumar — Video Editor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #111110;
+      --white: #FAFAF8;
+      --gray-100: #F2F1EE;
+      --gray-200: #E3E2DC;
+      --gray-400: #A8A79F;
+      --gray-600: #6B6A63;
+      --accent: #C8611A;
+      --accent-light: #FAF0E8;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--white);
+      color: var(--black);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 2.5rem;
+      border-bottom: 1px solid var(--gray-200);
+      position: sticky;
+      top: 0;
+      background: rgba(250,250,248,0.92);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 18px;
+      color: var(--black);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 14px;
+      color: var(--gray-600);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--black); }
+
+    /* HERO */
+    .hero {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 6rem 2.5rem 5rem;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 5px 14px;
+      border-radius: 100px;
+      background: var(--accent-light);
+      color: var(--accent);
+      border: 1px solid #F0D0B8;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.02em;
+    }
+    .badge::before {
+      content: '';
+      width: 7px; height: 7px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(36px, 6vw, 58px);
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--black);
+      margin-bottom: 1.25rem;
+      max-width: 620px;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .hero p {
+      font-size: 17px;
+      color: var(--gray-600);
+      max-width: 480px;
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+    }
+    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--black);
+      color: var(--white);
+      border: 1px solid var(--black);
+      padding: 12px 26px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-primary:hover { opacity: 0.8; }
+    .btn-secondary {
+      background: transparent;
+      color: var(--black);
+      border: 1px solid var(--gray-200);
+      padding: 12px 26px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      transition: background 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-secondary:hover { background: var(--gray-100); }
+
+    /* DIVIDER */
+    hr { border: none; border-top: 1px solid var(--gray-200); }
+
+    /* SECTIONS */
+    section { max-width: 860px; margin: 0 auto; padding: 4rem 2.5rem; }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      margin-bottom: 0.5rem;
+    }
+    .section-heading {
+      font-family: 'DM Serif Display', serif;
+      font-size: 28px;
+      font-weight: 400;
+      color: var(--black);
+      margin-bottom: 2rem;
+    }
+
+    /* SHOWREEL */
+    .showreel-wrap {
+  position: relative;
+  aspect-ratio: 16/9;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--gray-200);
+}
+    .showreel-wrap iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 12px;
+    }
+    .showreel-placeholder {
+      text-align: center;
+      color: var(--gray-400);
+    }
+    .showreel-placeholder p { font-size: 14px; margin-top: 0.5rem; }
+    .play-circle {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 0.5rem;
+    }
+    .play-circle svg { margin-left: 3px; }
+
+    /* PROJECTS */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 16px;
+    }
+    .project-card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .project-card:hover { border-color: var(--gray-400); transform: translateY(-2px); }
+    .project-tag {
+      font-size: 11px;
+      font-weight: 500;
+      padding: 4px 10px;
+      border-radius: 100px;
+      display: inline-block;
+      margin-bottom: 0.85rem;
+      letter-spacing: 0.03em;
+    }
+    .tag-yt { background: #FEF3E2; color: #92400E; }
+    .tag-com { background: #EFF6FF; color: #1D4ED8; }
+    .tag-social { background: #F0FDF4; color: #166534; }
+    .project-card h3 { font-size: 15px; font-weight: 500; margin-bottom: 0.4rem; color: var(--black); }
+    .project-card p { font-size: 13px; color: var(--gray-600); line-height: 1.6; margin-bottom: 1rem; }
+    .project-link {
+      font-size: 13px;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .project-link:hover { text-decoration: underline; }
+
+    /* CONTACT */
+    .contact-card {
+      background: var(--black);
+      border-radius: 16px;
+      padding: 3.5rem;
+      text-align: center;
+      color: var(--white);
+    }
+    .contact-card h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 32px;
+      font-weight: 400;
+      margin-bottom: 0.6rem;
+      color: var(--white);
+    }
+    .contact-card p {
+      font-size: 15px;
+      color: var(--gray-400);
+      margin-bottom: 2rem;
+      font-weight: 300;
+    }
+    .contact-links { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+    .contact-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.15);
+      font-size: 13px;
+      color: var(--white);
+      background: rgba(255,255,255,0.06);
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .contact-btn:hover { background: rgba(255,255,255,0.12); }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 13px;
+      color: var(--gray-400);
+      border-top: 1px solid var(--gray-200);
+    }
+
+    /* MOBILE */
+    @media (max-width: 600px) {
+      nav { padding: 1rem 1.25rem; }
+      .nav-links { gap: 1.25rem; }
+      section { padding: 3rem 1.25rem; }
+      .hero { padding: 4rem 1.25rem 3rem; }
+      .contact-card { padding: 2rem 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#">Ujjwal Kumar</a>
+  <ul class="nav-links">
+    <li><a href="#showreel">Showreel</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <div class="badge">Available for work</div>
+  <h1>Video editor for<br><em>brands & creators</em></h1>
+  <p>Specialising in YouTube content, social media ads, and commercial videos that hold attention and drive results.</p>
+  <div class="hero-btns">
+    <a href="#showreel" class="btn-primary">Watch showreel</a>
+    <a href="#contact" class="btn-secondary">Get in touch</a>
+  </div>
+</div>
+
+<hr>
+
+<!-- SHOWREEL -->
+<section id="showreel">
+  <p class="section-label">Showreel</p>
+  <p class="section-heading">My best work</p>
+  <div class="showreel-wrap">
+    <iframe 
+      src="https://player.vimeo.com/video/1176482109" 
+      style="position:absolute; top:0; left:0; width:100%; height:100%;" 
+      frameborder="0" 
+      allowfullscreen>
+    </iframe>
+  </div>
+</section>
+
+<hr>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <p class="section-label">Projects</p>
+  <p class="section-heading">Selected work</p>
+  <div class="projects-grid">
+
+    <a href="https://vimeo.com/1192191413" target="_blank" style="text-decoration: none;">
+      <div class="project-card">
+        <span class="project-tag tag-com">Travel</span>
+        <h3>Trip Untold — Ziro Valley</h3>
+        <p>Motion graphics edit featuring kinetic typography and masking.</p>
+        <span class="project-link">View project →</span>
+      </div>
+    </a>
+
+    <a href="https://vimeo.com/1192614972" target="_blank" style="text-decoration: none;">
+      <div class="project-card">
+        <span class="project-tag tag-com">Motorsport</span>
+        <h3>Motorsport Sequence</h3>
+        <p>High-energy edit focusing on speed and precision with rhythmic cutting.</p>
+        <span class="project-link">View project →</span>
+      </div>
+    </a>
+
+    <a href="https://vimeo.com/1176482071" target="_blank" style="text-decoration: none;">
+      <div class="project-card">
+        <span class="project-tag tag-social">Motion Design</span>
+        <h3>Aetheria Brand Teaser</h3>
+        <p>Cinematic motion design piece exploring brand identity with 3D camera movements.</p>
+        <span class="project-link">View project →</span>
+      </div>
+    </a>
+
+</div>
+
+  </div>
+</section>
+
+<hr>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-card">
+    <h2>Let's work together</h2>
+    <p>Open to YouTube channels, brand deals, and social media projects.</p>
+    <div class="contact-links">
+      <a href="mailto:ujjwal.uu.1111.ip@gmail.com" class="contact-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
+        Email me
+      </a>
+      <a href="https://instagram.com/cutsbyujjwal" target="_blank" class="contact-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
+        Instagram
+      </a>
+      <a href="https://youtube.com/@cutsbyujjwal" target="_blank" class="contact-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 8s-.3-2-1.2-2.8c-1.1-1.2-2.4-1.2-3-1.3C15.5 3.8 12 3.8 12 3.8s-3.5 0-5.8.1c-.6.1-1.9.1-3 1.3C2.3 6 2 8 2 8S1.8 10.3 1.8 12.5v2.1c0 2.2.2 4.4.2 4.4s.3 2 1.2 2.8c1.1 1.2 2.6 1.1 3.3 1.2C8.5 23.1 12 23.1 12 23.1s3.5 0 5.8-.1c.6-.1 1.9-.1 3-1.3.9-.8 1.2-2.8 1.2-2.8s.2-2.2.2-4.4v-2。C22。２ １０。３ ２２ ８ ２２ ８z"/><polygon points="9。5,１５。５ １５。５,１２ ９。5,８。5" fill="currentColor" stroke="none"/></svg>
+        YouTube
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>© 2026 Ujjwal Kumar</footer>
+
+</body>
+</html>
